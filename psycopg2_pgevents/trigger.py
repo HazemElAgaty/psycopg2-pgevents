@@ -40,7 +40,8 @@ RETURNS TRIGGER AS $function$
         'event_type', TG_OP,
         'schema_name', TG_TABLE_SCHEMA,
         'table_name', TG_TABLE_NAME,
-        'row_id', row_id
+        'row_id', row_id,
+        'data', NEW
       )::text
     );
     RETURN NULL;

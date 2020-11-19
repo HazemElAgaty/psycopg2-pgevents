@@ -38,8 +38,9 @@ class Event:
     schema_name: str
     table_name: str
     row_id: str
+    data: str
 
-    def __init__(self, id_: UUID, type_: str, schema_name: str, table_name: str, row_id: str) -> None:
+    def __init__(self, id_: UUID, type_: str, schema_name: str, table_name: str, row_id: str, data: str) -> None:
         """Initialize a new Event.
 
         Parameters
@@ -66,10 +67,11 @@ class Event:
         self.schema_name = schema_name
         self.table_name = table_name
         self.row_id = row_id
-
+        self.data = data
+        
     def __repr__(self):
-        return "<Event id:{id_} type:{type_} table:{schema}.{table} row-id:{row_id}".format(
-            id_=self.id, type_=self.type, schema=self.schema_name, table=self.table_name, row_id=self.row_id
+        return "<Event id:{id_} type:{type_} table:{schema}.{table} row-id:{row_id} data:{data}>".format(
+            id_=self.id, type_=self.type, schema=self.schema_name, table=self.table_name, row_id=self.row_id, data=self.data
         )
 
     @classmethod
@@ -88,7 +90,7 @@ class Event:
 
         """
         obj = json.loads(json_string)
-        return cls(UUID(obj["event_id"]), obj["event_type"], obj["schema_name"], obj["table_name"], obj["row_id"])
+        return cls(UUID(obj["event_id"]), obj["event_type"], obj["schema_name"], obj["table_name"], obj["row_id"], obj["data"])
 
     def tojson(self) -> str:
         """Serialize an Event into JSON.
@@ -106,6 +108,7 @@ class Event:
                 "schema_name": self.schema_name,
                 "table_name": self.table_name,
                 "row_id": self.row_id,
+                "data": self.data
             }
         )
 
